@@ -1,0 +1,85 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour {
+
+    [Range(100f, 10000f)]
+    public float acceleration;
+    [Range(1f, 3f)]
+    public float sprintFactor;
+    public float shootDelay;
+    private new Rigidbody2D rigidbody;
+    public GameObject aim;
+    private NetworkPlayer networkPlayer;
+    int id;
+
+    private PhotonView photonView;
+
+	// Use this for initialization
+	void Start () {
+        id = PhotonNetwork.player.ID;
+        rigidbody = GetComponent<Rigidbody2D>();
+        networkPlayer = GetComponent<NetworkPlayer>();
+	}
+
+
+    private float shootTime = 0;
+
+
+
+    Vector2 move;
+    // Update is called once per frame
+    void FixedUpdate () {
+        shootTime += Time.deltaTime;
+        move = new Vector2();
+        if (Input.GetMouseButton(0))
+        {
+            Fire();
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            move += new Vector2(0, 1);            
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            move += new Vector2(0, -1);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            move += new Vector2(-1, 0);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            move += new Vector2(1, 0);
+        }
+        move.Normalize();
+        move *= Time.fixedDeltaTime * acceleration;
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            move *= sprintFactor;
+        }
+
+
+        rigidbody.AddForce(move);
+	}
+
+    void Fire()
+    {
+        if (shootTime < shootDelay)
+        {
+            return;
+        }
+        shootTime = 0;
+        Vector2 start = transform.position;
+        Vector2 target = aim.transform.position;
+        float distance = (target - start).magnitude;
+        target += UnityEngine.Random.insideUnitCircle * distance * spray / 10f;
+        networkPlayer.FireBullet(id, start, target, speed);
+    }
+
+
+    float spray = 1;
+    float speed = 10;
+}
