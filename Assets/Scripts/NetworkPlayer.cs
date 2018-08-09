@@ -1,80 +1,67 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetworkPlayer : Photon.MonoBehaviour
+public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
 {
 
     public Camera cam;
-    public GameObject aim, bullet;
-    private new Rigidbody2D rigidbody;
-    PlayerController playerController;
-    int id;
+    public GameObject aim, bullet, healthBar;
+    public int id, health, maxHealth = 30;
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        health = maxHealth;
+        id = (int)photonView.instantiationData[0];
+        gameObject.name = "Player_" + id;
         if (photonView.isMine)
         {
             Camera.main.enabled = false;
             cam.enabled = true;
             aim.SetActive(true);
-            playerController = GetComponent<PlayerController>();
-            playerController.enabled = true;
+            GetComponent<PlayerController>().enabled = true;
             cam.transform.parent = null;
-            photonView.RPC("SetId", PhotonTargets.All, PhotonNetwork.player.ID);
         }
-        else
-        {
-            //cam.enabled = false;
-            //aim.SetActive(false);
-            //transform.parent.GetComponent<PlayerController>().enabled = false;
-        }
+    }
+
+    public void SetId()
+    {
+        photonView.RPC("SetId", PhotonTargets.All, PhotonNetwork.player.ID);
     }
 
     private Vector3 correctPlayerPos;
     private float correctPlayerRot;
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (!photonView.isMine)
-        {
-            //float speed = Time.deltaTime * 5;
-            //transform.position = Vector3.Lerp(transform.position, this.correctPlayerPos, Time.deltaTime * 5);
-            //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0,0,correctPlayerRot), Time.deltaTime * 5);
-
-            //float speed = Time.deltaTime * 10;
-
-            //rigidbody.MovePosition(Vector3.Lerp(transform.position, this.correctPlayerPos, speed));
-            //rigidbody.MoveRotation(Mathf.Lerp(transform.rotation.eulerAngles.z, this.correctPlayerRot, speed));
-        }
-    }
-
-    //void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    //{
-    //    if (stream.isWriting)
-    //    {
-    //        // We own this player: send the others our data
-    //        stream.SendNext(transform.position);
-    //        stream.SendNext(transform.rotation.z);
-    //    }
-    //    else
-    //    {
-    //        // Network player, receive data
-    //        this.correctPlayerPos = (Vector3)stream.ReceiveNext();
-    //        this.correctPlayerRot = (float)stream.ReceiveNext();
-    //    }
-    //}
+    private int bulletId = 0;
     public void FireBullet(int id, Vector2 start, Vector2 target, float speed)
     {
         photonView.RPC("GenerateBullet", PhotonTargets.All, id, start, target, speed);
     }
 
     [PunRPC]
+    void DestroyBulletRCP(string name)
+    {
+        GameObject g = GameObject.Find(name);
+        if (g == null) return;
+        //Destroy(g);
+        //return;
+        Bullet b = g.GetComponent<Bullet>();
+        if (b == null) return;
+        b.DestroySelf();
+    }
+    public void DestroyBullet(GameObject gameObject)
+    {
+        photonView.RPC("DestroyBulletRCP", PhotonTargets.All, gameObject.name);
+    }
+
+    [PunRPC]
     void GenerateBullet(int shooter, Vector2 start, Vector2 target, float speed)
     {
         GameObject bullet = Instantiate(this.bullet);
+
+        bullet.name = "Bullet_" + shooter + "_" + bulletId++;
+        bullet.GetComponent<Bullet>().shooter = gameObject;
 
         Vector2 position = start;
         bullet.transform.position = position;
@@ -85,11 +72,51 @@ public class NetworkPlayer : Photon.MonoBehaviour
 
         bullet.GetComponent<Rigidbody2D>().velocity = targetDirection * speed;
 
-        Destroy(bullet, 10);
+        
     }
+
     [PunRPC]
-    void SetId(int id)
+    void DestroyPlayerRCP(int id)
     {
-        this.id = id;
+        Destroy(GameObject.Find("Player_" + id));        
+    }
+
+    public void Die()
+    {
+        photonView.RPC("DestroyPlayerRCP", PhotonTargets.Others, id);
+        DestroySelf();
+        PhotonNetwork.Disconnect();
+    }
+    void DestroySelf()
+    {
+        Destroy(aim);
+        Destroy(cam.gameObject);
+        Destroy(gameObject);
+    }
+
+    public void Damage(int amount)
+    {
+        health -= amount;
+        if (health < 0) Die();
+
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.isWriting)
+        {
+            stream.SendNext(health);
+        }
+        else
+        {
+            health = (int)stream.ReceiveNext();
+        }
+    }
+
+    void Update()
+    {
+        float size = (float)health / maxHealth * 3;
+        healthBar.transform.localPosition = new Vector3(-1.5f + (size) * 0.5f,0,0);
+        healthBar.transform.localScale = new Vector3(size,1,1);
     }
 }

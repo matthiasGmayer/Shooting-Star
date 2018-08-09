@@ -10,9 +10,14 @@ public class NetworkManager : PunBehaviour {
     private GameObject mainMenu;
     [SerializeField]
     private GameObject player;
+    public Camera mainCamera;
 
+    public static NetworkManager instance;
 
-
+    void Awake()
+    {
+        instance = this;
+    }
     // Use this for initialization
     void Start () {
         PhotonNetwork.sendRate = 30;
@@ -23,6 +28,13 @@ public class NetworkManager : PunBehaviour {
     {
         if(!PhotonNetwork.connected)
             PhotonNetwork.ConnectUsingSettings("1");
+    }
+
+    public override void OnDisconnectedFromPhoton()
+    {
+        base.OnDisconnectedFromPhoton();
+        mainMenu.SetActive(true);
+        mainCamera.enabled = true;
     }
 
     public override void OnConnectedToMaster()
@@ -55,15 +67,9 @@ public class NetworkManager : PunBehaviour {
     private void Spawn()
     {
         Debug.Log("Attempting Spawn");
-        GameObject p = PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0);
+        GameObject p = PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0, new object[] { PhotonNetwork.player.ID});
+
+
     }
 
-
-
-
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

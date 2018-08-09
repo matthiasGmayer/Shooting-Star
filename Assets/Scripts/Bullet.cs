@@ -6,27 +6,33 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 
 
-    Vector2 targetDirection;
-    [SerializeField]
-    private float spray = 1;
-    [SerializeField]
-    private float speed = 1;
+    public GameObject trail, shooter;
 
-    private GameObject shooter;
-
-    private int maxLifeTime = 10;
-    
-    void OnTriggerEnter2D(Collider2D c)
+    void Start()
     {
-        if (c.gameObject == shooter) return;
-        if (c.gameObject.tag.Equals("H"))
-        {
-            Hit();
-        }
+        Invoke("Destroy", 10);
     }
 
-    private void Hit()
+    public void DestroySelf()
     {
+        trail.transform.parent = null;
+        trail.GetComponent<ShutDown>().Shutdown();
         Destroy(gameObject);
     }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.name.Contains("Player_")) return;
+        Destroy();
+    }
+
+    public void Destroy()
+    {
+        if (shooter == null) {
+            DestroySelf();
+            return;
+        }
+        shooter.GetComponent<NetworkPlayer>().DestroyBullet(gameObject);
+    }
+
 }
