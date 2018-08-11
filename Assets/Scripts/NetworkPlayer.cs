@@ -9,11 +9,14 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
     public Camera cam;
     public GameObject aim, bullet, healthBar;
     public int id, health, maxHealth = 30;
+    public UnityEngine.UI.Text nameText;
+    public UnityEngine.UI.Text damageText;
     // Use this for initialization
     void Awake()
     {
         health = maxHealth;
         id = (int)photonView.instantiationData[0];
+        nameText.text = (string)photonView.instantiationData[1];
         gameObject.name = "Player_" + id;
         if (photonView.isMine)
         {
@@ -115,6 +118,7 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
 
     void Update()
     {
+        damageText.text = health.ToString();
         float size = (float)health / maxHealth * 3;
         healthBar.transform.localPosition = new Vector3(-1.5f + (size) * 0.5f,0,0);
         healthBar.transform.localScale = new Vector3(size,1,1);

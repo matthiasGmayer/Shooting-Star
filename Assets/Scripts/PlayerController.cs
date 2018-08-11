@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Q)) networkPlayer.Die();
+        if (Input.GetKey(KeyCode.Q)) networkPlayer.Damage(1);
 
         shootTime += Time.deltaTime;
         move = new Vector2();

@@ -12,6 +12,8 @@ public class NetworkManager : PunBehaviour {
     private GameObject player;
     public Camera mainCamera;
 
+    public UnityEngine.UI.InputField nameField;
+
     public static NetworkManager instance;
 
     void Awake()
@@ -67,7 +69,7 @@ public class NetworkManager : PunBehaviour {
     private void Spawn()
     {
         Debug.Log("Attempting Spawn");
-        GameObject p = PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0, new object[] { PhotonNetwork.player.ID});
+        GameObject p = PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0, new object[] { PhotonNetwork.player.ID, nameField.text.Equals("") ? "Unknown_" + PhotonNetwork.player.ID : nameField.text});
 
 
     }
