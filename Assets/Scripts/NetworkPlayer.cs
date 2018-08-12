@@ -39,7 +39,7 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
     private int bulletId = 0;
     public void FireBullet(int id, Vector2 start, Vector2 target, float speed)
     {
-        photonView.RPC("GenerateBullet", PhotonTargets.All, id, start, target, speed);
+        photonView.RPC("GenerateBullet", PhotonTargets.All, id, bulletId++, start, target, speed, PhotonNetwork.GetPing() / 1000f);
     }
 
     [PunRPC]
@@ -47,23 +47,21 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
     {
         GameObject g = GameObject.Find(name);
         if (g == null) return;
-        //Destroy(g);
-        //return;
         Bullet b = g.GetComponent<Bullet>();
-        if (b == null) return;
         b.DestroySelf();
     }
     public void DestroyBullet(GameObject gameObject)
     {
+        if (!PhotonNetwork.connected) return;
         photonView.RPC("DestroyBulletRCP", PhotonTargets.All, gameObject.name);
     }
 
     [PunRPC]
-    void GenerateBullet(int shooter, Vector2 start, Vector2 target, float speed)
+    void GenerateBullet(int shooter, int bulletId, Vector2 start, Vector2 target, float speed, float ping)
     {
         GameObject bullet = Instantiate(this.bullet);
 
-        bullet.name = "Bullet_" + shooter + "_" + bulletId++;
+        bullet.name = "Bullet_" + shooter + "_" + bulletId;
         bullet.GetComponent<Bullet>().shooter = gameObject;
 
         Vector2 position = start;
@@ -73,9 +71,13 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         bullet.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
 
-        bullet.GetComponent<Rigidbody2D>().velocity = targetDirection * speed;
+        Rigidbody2D rig = bullet.GetComponent<Rigidbody2D>();
+        rig.velocity = targetDirection * speed;
+        if (shooter != PhotonNetwork.player.ID)
+        {
+            bullet.transform.position += (Vector3)rig.velocity * (PhotonNetwork.GetPing() / 1000f + ping);
+        }
 
-        
     }
 
     [PunRPC]
@@ -100,7 +102,7 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
     public void Damage(int amount)
     {
         health -= amount;
-        if (health < 0) Die();
+        if (health <= 0) Die();
 
     }
 

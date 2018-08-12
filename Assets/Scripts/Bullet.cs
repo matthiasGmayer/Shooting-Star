@@ -8,6 +8,8 @@ public class Bullet : MonoBehaviour {
 
     public GameObject trail, shooter;
 
+    private int shooterId;
+
     void Start()
     {
         Invoke("Destroy", 10);
@@ -22,17 +24,21 @@ public class Bullet : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.name.Contains("Player_")) return;
+        if (shooter == null||col.gameObject.name.Equals(shooter.name)) return;
         Destroy();
     }
 
     public void Destroy()
     {
-        if (shooter == null) {
+        if (shooter == null)
+        {
             DestroySelf();
             return;
         }
-        shooter.GetComponent<NetworkPlayer>().DestroyBullet(gameObject);
+        if (PhotonNetwork.player.ID == int.Parse(shooter.name.Split('_')[1]))
+            shooter.GetComponent<NetworkPlayer>().DestroyBullet(gameObject);
+        else
+            DestroySelf();
     }
 
 }

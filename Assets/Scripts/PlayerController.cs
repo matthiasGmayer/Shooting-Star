@@ -93,15 +93,16 @@ public class PlayerController : MonoBehaviour
     {
         if (col.gameObject.name.Contains("Bullet_"))
         {
+
             int shooterId = int.Parse(col.gameObject.name.Split('_')[1]);
-            if (networkPlayer.id == shooterId) return;
-            DestroyBullet(col.gameObject);
-            if (!enabled) return;
-            networkPlayer.Damage(1);
+            if (networkPlayer.id != shooterId)
+            {
+                if (enabled)
+                {
+                    networkPlayer.Damage(1);
+                    networkPlayer.DestroyBullet(col.gameObject);
+                }
+            }
         }
-    }
-    void DestroyBullet(GameObject gameObject)
-    {
-        networkPlayer.DestroyBullet(gameObject);
     }
 }

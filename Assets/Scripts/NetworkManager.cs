@@ -11,6 +11,7 @@ public class NetworkManager : PunBehaviour {
     [SerializeField]
     private GameObject player;
     public Camera mainCamera;
+    public GameObject barrel, background;
 
     public UnityEngine.UI.InputField nameField;
 
@@ -42,22 +43,36 @@ public class NetworkManager : PunBehaviour {
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-        Debug.Log("Connected to Master");
         PhotonNetwork.JoinLobby();
     }
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
-        Debug.Log("Joined lobby");
         mainMenu.SetActive(false);
         PhotonNetwork.JoinRandomRoom();
     }
 
+
+
     public override void OnPhotonRandomJoinFailed(object[] codeAndMsg)
     {
-        Debug.Log("Creating Room");
         base.OnPhotonRandomJoinFailed(codeAndMsg);
         PhotonNetwork.CreateRoom(null);
+    }
+
+    public override void OnCreatedRoom()
+    {
+        base.OnCreatedRoom();
+        Sprite sprite = background.GetComponent<SpriteRenderer>().sprite;
+        float width = background.transform.localScale.x / sprite.pixelsPerUnit * sprite.texture.width;
+        float height = background.transform.localScale.y / sprite.pixelsPerUnit * sprite.texture.height;
+        width -= width / 2;
+        height -= height / 2;
+        for (int i = 0; i < 100; i++)
+        {
+            Vector3 position = new Vector3(UnityEngine.Random.value * width, UnityEngine.Random.value * height, 0);
+            PhotonNetwork.InstantiateSceneObject(barrel.name, position, Quaternion.identity, 0, null);
+        }
     }
 
     public override void OnJoinedRoom()
@@ -68,10 +83,10 @@ public class NetworkManager : PunBehaviour {
 
     private void Spawn()
     {
-        Debug.Log("Attempting Spawn");
-        GameObject p = PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0, new object[] { PhotonNetwork.player.ID, nameField.text.Equals("") ? "Unknown_" + PhotonNetwork.player.ID : nameField.text});
-
-
+        int id = PhotonNetwork.player.ID;
+        string name = nameField.text;
+        if (name.Equals("")) name = "Unknown_" + id;
+        PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0, new object[] { id, name }).SetActive(true);
     }
 
 }
