@@ -23,8 +23,8 @@ public class NetworkManager : PunBehaviour {
     }
     // Use this for initialization
     void Start () {
-        PhotonNetwork.sendRate = 30;
-        PhotonNetwork.sendRateOnSerialize = 30;
+        PhotonNetwork.sendRate = Settings.instance.sendRate;
+        PhotonNetwork.sendRateOnSerialize = Settings.instance.sendRateOnSerialize;
     }
 
     public void Connect()
