@@ -12,7 +12,7 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
     public UnityEngine.UI.Text nameText;
     public UnityEngine.UI.Text damageText;
     // Use this for initialization
-    void Awake()
+    void Start()
     {
         health = maxHealth;
         id = (int)photonView.instantiationData[0];
