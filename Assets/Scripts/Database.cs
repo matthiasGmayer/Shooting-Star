@@ -6,16 +6,26 @@ using UnityEngine;
 
 public class Database : MonoBehaviour
 {
-
-    [SerializeField]
-    public string databaseInput;
-    public static string database;
     public static int? sessionId;
+    private new static string name;
+    public static string Name
+    {
+        get
+        {
+            return name;
+        }
+    }
+    private static bool loggedIn;
+    public static bool LoggedIn
+    {
+        get
+        {
+            return loggedIn;
+        }
+    }
     // Use this for initialization
     void Start()
     {
-        database = databaseInput;
-
         //Database.Login("Max", "s");
     }
 
@@ -36,14 +46,13 @@ public class Database : MonoBehaviour
 
     private static string Command(string url, params string[] commands)
     {
-        url = url.Replace("!", database);
+        url = url.Replace("!", Settings.Database);
         if (!url.EndsWith(".php")) url += ".php";
         if (commands.Length > 0) url += "?" + commands[0];
         for (int i = 1; i < commands.Length; i++)
         {
             url += "&" + commands[i];
         }
-        Debug.Log(url);
         return url;
     }
 
@@ -62,14 +71,19 @@ public class Database : MonoBehaviour
     public static void Login(string username, string password)
     {
         string sessionId = GetLine(Command("!AccountSystem/loginlater", "user=" + username, "password=" + password, "lira=1"));
+        Debug.Log(sessionId);
         int id;
         if (int.TryParse(sessionId, out id))
         {
             Database.sessionId = id;
+            name = username;
+            loggedIn = true;
         }
         else
         {
+            loggedIn = false;
             Database.sessionId = null;
+            name = null;
         }
 
     }

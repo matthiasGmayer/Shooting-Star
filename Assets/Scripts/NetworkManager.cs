@@ -14,23 +14,16 @@ public class NetworkManager : PunBehaviour {
     public GameObject barrel, background;
 
     public UnityEngine.UI.InputField nameField;
-
-    public static NetworkManager instance;
-
-    void Awake()
-    {
-        instance = this;
-    }
     // Use this for initialization
     void Start () {
-        PhotonNetwork.sendRate = Settings.instance.sendRate;
-        PhotonNetwork.sendRateOnSerialize = Settings.instance.sendRateOnSerialize;
+        PhotonNetwork.sendRate = Settings.SendRate;
+        PhotonNetwork.sendRateOnSerialize = Settings.SendRateOnSerialize;
     }
 
     public void Connect()
     {
         if(!PhotonNetwork.connected)
-            PhotonNetwork.ConnectUsingSettings("1");
+            PhotonNetwork.ConnectUsingSettings(Settings.Version);
     }
 
     public override void OnDisconnectedFromPhoton()
@@ -84,8 +77,8 @@ public class NetworkManager : PunBehaviour {
     private void Spawn()
     {
         int id = PhotonNetwork.player.ID;
-        string name = nameField.text;
-        if (name.Equals("")) name = "Unknown_" + id;
+        string name = Database.Name;
+        if ("".Equals(name)) name = "Guest" + id;
         PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0, new object[] { id, name }).SetActive(true);
     }
 
