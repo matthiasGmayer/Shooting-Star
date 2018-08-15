@@ -11,26 +11,38 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
     public int id, health, maxHealth = 30;
     public UnityEngine.UI.Text nameText;
     public UnityEngine.UI.Text damageText;
+    private PlayerController playerController;
+
+
+    void Awake()
+    {
+        playerController = GetComponent<PlayerController>();
+    }
     // Use this for initialization
     void Start()
     {
         health = maxHealth;
-        id = (int)photonView.instantiationData[0];
-        nameText.text = (string)photonView.instantiationData[1];
-        gameObject.name = "Player_" + id;
         if (photonView.isMine)
         {
             Camera.main.enabled = false;
             cam.enabled = true;
             aim.SetActive(true);
-            GetComponent<PlayerController>().enabled = true;
+            playerController.controlled = true;
             cam.transform.parent = null;
         }
+        id = (int)photonView.instantiationData[0];
+        nameText.text = (string)photonView.instantiationData[1];
+        gameObject.name = "Player_" + id;
     }
 
-    public void SetId()
+
+    void Update()
     {
-        photonView.RPC("SetId", PhotonTargets.All, PhotonNetwork.player.ID);
+
+        damageText.text = health.ToString();
+        float size = (float)health / maxHealth * 3;
+        healthBar.transform.localPosition = new Vector3(-1.5f + (size) * 0.5f, 0, 0);
+        healthBar.transform.localScale = new Vector3(size, 1, 1);
     }
 
     private Vector3 correctPlayerPos;
@@ -111,18 +123,13 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
         if (stream.isWriting)
         {
             stream.SendNext(health);
+            stream.SendNext(playerController.animationMove);
         }
         else
         {
             health = (int)stream.ReceiveNext();
-        }
-    }
+            playerController.animationMove = (Vector2)stream.ReceiveNext();
 
-    void Update()
-    {
-        damageText.text = health.ToString();
-        float size = (float)health / maxHealth * 3;
-        healthBar.transform.localPosition = new Vector3(-1.5f + (size) * 0.5f,0,0);
-        healthBar.transform.localScale = new Vector3(size,1,1);
+        }
     }
 }

@@ -17,8 +17,11 @@ public class PlayerController : MonoBehaviour
     public GameObject aim;
     public GameObject cam;
     private NetworkPlayer networkPlayer;
+    public Animator animator;
+    public Vector2 animationMove = new Vector2();
     public int health;
     public int maxHealth = 30;
+    public bool controlled = false;
 
     // Use this for initialization
     void Start()
@@ -40,39 +43,44 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Q)) networkPlayer.Damage(1);
+        if (controlled)
+        {
+            if (Input.GetKey(KeyCode.Q)) networkPlayer.Damage(1);
 
-        shootTime += Time.deltaTime;
-        move = new Vector2();
-        if (Input.GetMouseButton(0))
-        {
-            Fire();
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            move += new Vector2(0, 1);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            move += new Vector2(0, -1);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            move += new Vector2(-1, 0);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            move += new Vector2(1, 0);
-        }
-        move.Normalize();
-        move *= Time.fixedDeltaTime * acceleration;
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            move *= sprintFactor;
-        }
+            shootTime += Time.deltaTime;
+            move = new Vector2();
+            if (Input.GetMouseButton(0))
+            {
+                Fire();
+            }
+            if (Input.GetKey(KeyCode.W))
+            {
+                move += new Vector2(0, 1);
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                move += new Vector2(0, -1);
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                move += new Vector2(-1, 0);
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                move += new Vector2(1, 0);
+            }
+            move.Normalize();
+            animationMove = new Vector2(move.x, move.y);
 
-
-        rigidbody.AddForce(move);
+            move *= Time.fixedDeltaTime * acceleration;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                move *= sprintFactor;
+            }
+            rigidbody.AddForce(move);
+        }
+        animator.SetFloat("x", animationMove.x);
+        animator.SetFloat("y", animationMove.y);
     }
 
     void Fire()
@@ -97,7 +105,7 @@ public class PlayerController : MonoBehaviour
             int shooterId = int.Parse(col.gameObject.name.Split('_')[1]);
             if (networkPlayer.id != shooterId)
             {
-                if (enabled)
+                if (controlled)
                 {
                     networkPlayer.Damage(1);
                     networkPlayer.DestroyBullet(col.gameObject);
