@@ -59,6 +59,15 @@ public class Settings : MonoBehaviour {
             return instance.skipLogin;
         }
     }
+    [SerializeField]
+    private float semi3Dprecision;
+    public static float Semi3Dprecision
+    {
+        get
+        {
+            return instance.semi3Dprecision;
+        }
+    }
 
     void Awake()
     {

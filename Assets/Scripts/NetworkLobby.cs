@@ -10,8 +10,9 @@ public class NetworkLobby : PunBehaviour
 
     public InputField usernameField;
     public InputField passwordField;
-    public GameObject loginPanel, roomPanel, createRoomPanel, inGamePanel, barrel, background, player;
-    public GameObject[] menuStates;
+    public GameObject loginPanel, roomPanel, createRoomPanel, inGamePanel, background, player;
+    public GameObject[] objectsToSpawn;
+    private GameObject[] menuStates;
     public GameObject room;
     public GameObject sliderFillArea;
     public InputField createRoomNameField;
@@ -117,12 +118,12 @@ public class NetworkLobby : PunBehaviour
     }
     public void ToMenuState(GameObject o)
     {
-        foreach(GameObject ob in menuStates)
+        foreach (GameObject ob in menuStates)
         {
             if (ob == o) continue;
             ob.SetActive(false);
         }
-        if(o != null)
+        if (o != null)
             o.SetActive(true);
     }
 
@@ -172,6 +173,12 @@ public class NetworkLobby : PunBehaviour
 
     private void SetupStage()
     {
+        string[] names = new string[objectsToSpawn.Length];
+        for (int i = 0; i < names.Length; i++)
+        {
+            names[i] = objectsToSpawn[i].name;
+        }
+
         Sprite sprite = background.GetComponent<SpriteRenderer>().sprite;
         float width = background.transform.localScale.x / sprite.pixelsPerUnit * sprite.texture.width;
         float height = background.transform.localScale.y / sprite.pixelsPerUnit * sprite.texture.height;
@@ -179,8 +186,10 @@ public class NetworkLobby : PunBehaviour
         height -= height / 2;
         for (int i = 0; i < 100; i++)
         {
-            Vector3 position = new Vector3(UnityEngine.Random.value * width, UnityEngine.Random.value * height, 0);
-            PhotonNetwork.InstantiateSceneObject(barrel.name, position, Quaternion.identity, 0, null);
+            Vector3 position = new Vector3((UnityEngine.Random.value * 2 - 1) * width, (UnityEngine.Random.value * 2 - 1) * height, 0);
+            int name = (int)(UnityEngine.Random.value * names.Length);
+            Debug.Log(name);
+            PhotonNetwork.InstantiateSceneObject(names[name], position, Quaternion.identity, 0, null);
         }
     }
 
