@@ -5,22 +5,50 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon;
 
-public class NetworkLobby : PunBehaviour {
+public class NetworkLobby : PunBehaviour
+{
 
     public InputField usernameField;
     public InputField passwordField;
-    public GameObject loginPanel, roomPanel, createRoomPanel;
+    public GameObject loginPanel, roomPanel, createRoomPanel, inGamePanel, barrel, background, player;
+    public GameObject[] menuStates;
     public GameObject room;
     public GameObject sliderFillArea;
     public InputField createRoomNameField;
     public InputField createRoomPasswordField;
     public Slider createRoomMaxPlayers;
 
+    public static NetworkLobby instance;
+
+
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+    }
     void Start()
     {
         PhotonNetwork.sendRate = Settings.SendRate;
         PhotonNetwork.sendRateOnSerialize = Settings.SendRateOnSerialize;
+        if (Settings.SkipLogin)
+        {
+            Connect();
+            ToMenuState(roomPanel);
+        }
         DontDestroyOnLoad(gameObject);
+        menuStates = new GameObject[] { loginPanel, roomPanel, createRoomPanel, inGamePanel };
+    }
+
+    void Update()
+    {
+        if (PhotonNetwork.inRoom && Input.GetKeyDown(KeyCode.Escape))
+        {
+            inGamePanel.SetActive(!inGamePanel.activeSelf);
+        }
     }
 
     public void Connect()
@@ -29,10 +57,10 @@ public class NetworkLobby : PunBehaviour {
             PhotonNetwork.ConnectUsingSettings(Settings.Version);
     }
 
-    //public void LoginThreaded()
-    //{
-    //    new System.Threading.Thread(Login).Start();
-    //}
+    public void Disconnect()
+    {
+        PhotonNetwork.Disconnect();
+    }
 
     public void Login()
     {
@@ -47,14 +75,24 @@ public class NetworkLobby : PunBehaviour {
         }
     }
 
+
+    List<GameObject> roomList = new List<GameObject>();
     public void RefreshRooms()
     {
+
+        foreach (var room in roomList)
+        {
+            Destroy(room);
+        }
+        roomList.Clear();
         RoomInfo[] rooms = PhotonNetwork.GetRoomList();
         int i = 0;
         foreach (RoomInfo roomInfo in rooms)
         {
+            Debug.Log(roomInfo.Name);
             GameObject room = Instantiate(this.room, sliderFillArea.transform);
-            room.transform.position = new Vector3(0, 50 * i++, 0);
+            roomList.Add(room);
+            room.transform.localPosition = new Vector3(0, 50 * i++, 0);
             room.GetComponent<ManageRoom>().Init(roomInfo);
         }
     }
@@ -64,28 +102,33 @@ public class NetworkLobby : PunBehaviour {
         Connect();
     }
 
-    public void ToLogin()
+    public void JoinRoom(string name)
     {
-        loginPanel.SetActive(true);
-        roomPanel.SetActive(false);
-        createRoomPanel.SetActive(false);
+        PhotonNetwork.JoinRoom(name);
+        //background.SetActive(true);
     }
-    public void ToRooms()
+
+    public void LeaveRoom()
     {
-        loginPanel.SetActive(false);
-        roomPanel.SetActive(true);
-        createRoomPanel.SetActive(false);
+        PhotonNetwork.LeaveRoom();
+        ToMenuState(roomPanel);
+        Destroy(GameObject.Find("PlayerCamera"));
+        //background.SetActive(false);
     }
-    public void ToCreateRoom()
+    public void ToMenuState(GameObject o)
     {
-        loginPanel.SetActive(false);
-        roomPanel.SetActive(false);
-        createRoomPanel.SetActive(true);
+        foreach(GameObject ob in menuStates)
+        {
+            if (ob == o) continue;
+            ob.SetActive(false);
+        }
+        if(o != null)
+            o.SetActive(true);
     }
 
     public override void OnDisconnectedFromPhoton()
     {
-        ToLogin();
+        ToMenuState(loginPanel);
         base.OnDisconnectedFromPhoton();
     }
 
@@ -96,28 +139,60 @@ public class NetworkLobby : PunBehaviour {
     }
     public override void OnJoinedLobby()
     {
-        ToRooms();
+        ToMenuState(roomPanel);
         base.OnJoinedLobby();
+    }
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+        ToMenuState(null);
+        Spawn();
     }
 
     public override void OnCreatedRoom()
     {
 
-        ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable();
-        properties.Add(RoomOptions.password, createRoomPasswordField.text);
+        ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable
+        {
+            { RoomProperties.password, createRoomPasswordField.text }
+        };
         PhotonNetwork.room.SetCustomProperties(properties);
         PhotonNetwork.room.MaxPlayers = (int)createRoomMaxPlayers.value;
         base.OnCreatedRoom();
+        SetupStage();
+
+    }
+    private void Spawn()
+    {
+        int id = PhotonNetwork.player.ID;
+        string name = Database.Name;
+        if ("".Equals(name)) name = "Guest" + id;
+        PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0, new object[] { id, name }).SetActive(true);
     }
 
-    public enum RoomOptions
+    private void SetupStage()
+    {
+        Sprite sprite = background.GetComponent<SpriteRenderer>().sprite;
+        float width = background.transform.localScale.x / sprite.pixelsPerUnit * sprite.texture.width;
+        float height = background.transform.localScale.y / sprite.pixelsPerUnit * sprite.texture.height;
+        width -= width / 2;
+        height -= height / 2;
+        for (int i = 0; i < 100; i++)
+        {
+            Vector3 position = new Vector3(UnityEngine.Random.value * width, UnityEngine.Random.value * height, 0);
+            PhotonNetwork.InstantiateSceneObject(barrel.name, position, Quaternion.identity, 0, null);
+        }
+    }
+
+    public enum RoomProperties
     {
         password
     }
 
     public void CreateRoom()
     {
-        SceneManager.LoadScene("Standard");
-        PhotonNetwork.CreateRoom(createRoomNameField.text);
+        string name = createRoomNameField.text;
+        if (name.Equals("")) return;
+        PhotonNetwork.CreateRoom(name);
     }
 }

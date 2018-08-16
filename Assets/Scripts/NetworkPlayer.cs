@@ -24,7 +24,7 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
         health = maxHealth;
         if (photonView.isMine)
         {
-            Camera.main.enabled = false;
+            //Camera.main.enabled = false;
             cam.enabled = true;
             aim.SetActive(true);
             playerController.controlled = true;

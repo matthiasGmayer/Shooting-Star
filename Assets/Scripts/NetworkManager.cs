@@ -3,54 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon;
 using System;
+using UnityEngine.SceneManagement;
 
 public class NetworkManager : PunBehaviour {
 
     [SerializeField]
-    private GameObject mainMenu;
-    [SerializeField]
     private GameObject player;
-    public Camera mainCamera;
-    public GameObject barrel, background;
+    public GameObject barrel, background,menu;
 
-    public UnityEngine.UI.InputField nameField;
-    // Use this for initialization
-    void Start () {
-        PhotonNetwork.sendRate = Settings.SendRate;
-        PhotonNetwork.sendRateOnSerialize = Settings.SendRateOnSerialize;
-    }
 
-    public void Connect()
+    void Update()
     {
-        if(!PhotonNetwork.connected)
-            PhotonNetwork.ConnectUsingSettings(Settings.Version);
-    }
-
-    public override void OnDisconnectedFromPhoton()
-    {
-        base.OnDisconnectedFromPhoton();
-        mainMenu.SetActive(true);
-        mainCamera.enabled = true;
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        base.OnConnectedToMaster();
-        PhotonNetwork.JoinLobby();
-    }
-    public override void OnJoinedLobby()
-    {
-        base.OnJoinedLobby();
-        mainMenu.SetActive(false);
-        PhotonNetwork.JoinRandomRoom();
-    }
-
-
-
-    public override void OnPhotonRandomJoinFailed(object[] codeAndMsg)
-    {
-        base.OnPhotonRandomJoinFailed(codeAndMsg);
-        PhotonNetwork.CreateRoom(null);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            menu.SetActive(!menu.activeSelf);
+        }
     }
 
     public override void OnCreatedRoom()
@@ -82,4 +49,9 @@ public class NetworkManager : PunBehaviour {
         PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0, new object[] { id, name }).SetActive(true);
     }
 
+    public void Disconnect()
+    {
+        SceneManager.LoadScene("Lobby");
+        PhotonNetwork.LeaveRoom();
+    }
 }

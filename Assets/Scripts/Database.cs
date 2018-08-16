@@ -7,7 +7,7 @@ using UnityEngine;
 public class Database : MonoBehaviour
 {
     public static int? sessionId;
-    private new static string name;
+    private new static string name = "";
     public static string Name
     {
         get
