@@ -87,7 +87,7 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
         rig.velocity = targetDirection * speed;
         if (shooter != PhotonNetwork.player.ID)
         {
-            bullet.transform.position += (Vector3)rig.velocity * (PhotonNetwork.GetPing() / 1000f + ping);
+            rig.MovePosition(bullet.transform.position + (Vector3)rig.velocity * (PhotonNetwork.GetPing() / 1000f + ping));
         }
 
     }
@@ -98,11 +98,16 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
         Destroy(GameObject.Find("Player_" + id));        
     }
 
-    public void Die()
+    public void Destroy()
     {
         photonView.RPC("DestroyPlayerRCP", PhotonTargets.Others, id);
         DestroySelf();
         PhotonNetwork.Disconnect();
+    }
+    public void Die()
+    {
+        transform.position = new Vector3();
+        health = maxHealth;
     }
     void DestroySelf()
     {

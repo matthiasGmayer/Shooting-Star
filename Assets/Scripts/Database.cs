@@ -83,7 +83,7 @@ public class Database : MonoBehaviour
         {
             loggedIn = false;
             Database.sessionId = null;
-            name = null;
+            name = "";
         }
 
     }

@@ -80,7 +80,6 @@ public class NetworkLobby : PunBehaviour
     List<GameObject> roomList = new List<GameObject>();
     public void RefreshRooms()
     {
-
         foreach (var room in roomList)
         {
             Destroy(room);
@@ -90,7 +89,6 @@ public class NetworkLobby : PunBehaviour
         int i = 0;
         foreach (RoomInfo roomInfo in rooms)
         {
-            Debug.Log(roomInfo.Name);
             GameObject room = Instantiate(this.room, sliderFillArea.transform);
             roomList.Add(room);
             room.transform.localPosition = new Vector3(0, 50 * i++, 0);
@@ -142,6 +140,7 @@ public class NetworkLobby : PunBehaviour
     {
         ToMenuState(roomPanel);
         base.OnJoinedLobby();
+        Invoke("RefreshRooms", 0.01f);
     }
     public override void OnJoinedRoom()
     {
@@ -201,7 +200,7 @@ public class NetworkLobby : PunBehaviour
     public void CreateRoom()
     {
         string name = createRoomNameField.text;
-        if (name.Equals("")) return;
+        if (name == null || name.Equals("")) return;
         PhotonNetwork.CreateRoom(name);
     }
 }
