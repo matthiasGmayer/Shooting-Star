@@ -42,7 +42,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -74,7 +74,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -85,7 +85,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -98,10 +98,10 @@ TextureImporter:
       name: johnson_animation_0
       rect:
         serializedVersion: 2
-        x: 12
-        y: 326
-        width: 12
-        height: 22
+        x: 0
+        y: 320
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -109,7 +109,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e190ca4f36302ca468b0679110f51450
+      spriteID: 2e2de274badb7af489e3388e02c00f1a
       vertices: []
       indices: 
       edges: []
@@ -118,10 +118,10 @@ TextureImporter:
       name: johnson_animation_1
       rect:
         serializedVersion: 2
-        x: 12
-        y: 293
-        width: 12
-        height: 22
+        x: 0
+        y: 288
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -129,7 +129,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 972cfbefcdc9cd04f983b4bc46835092
+      spriteID: d1b222c75f5f4c547995a8f831572cf9
       vertices: []
       indices: 
       edges: []
@@ -138,10 +138,10 @@ TextureImporter:
       name: johnson_animation_2
       rect:
         serializedVersion: 2
-        x: 12
-        y: 261
-        width: 12
-        height: 22
+        x: 0
+        y: 256
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,7 +149,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 021caa3f155405b48a160db25a439aaf
+      spriteID: 12779e219d9fd7d44af7f44f1b323eaa
       vertices: []
       indices: 
       edges: []
@@ -158,10 +158,10 @@ TextureImporter:
       name: johnson_animation_3
       rect:
         serializedVersion: 2
-        x: 13
-        y: 230
-        width: 6
-        height: 21
+        x: 0
+        y: 224
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,7 +169,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe87f184ddc620448b06085a8d33a33a
+      spriteID: 4b62ae53e26343648bac1d1dccc64325
       vertices: []
       indices: 
       edges: []
@@ -178,10 +178,10 @@ TextureImporter:
       name: johnson_animation_4
       rect:
         serializedVersion: 2
-        x: 13
-        y: 198
-        width: 9
-        height: 21
+        x: 0
+        y: 192
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -189,7 +189,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c88784a5a7df1764c9941aaed6acd694
+      spriteID: aee63114e77ce3743bf2cd0545bae25f
       vertices: []
       indices: 
       edges: []
@@ -198,10 +198,10 @@ TextureImporter:
       name: johnson_animation_5
       rect:
         serializedVersion: 2
-        x: 9
-        y: 166
-        width: 12
-        height: 22
+        x: 0
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -209,7 +209,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1fe2368ef390d2a4ba50ce0a0dc0047a
+      spriteID: e6533f9161e1a8743ba60e5a32d3c3fb
       vertices: []
       indices: 
       edges: []
@@ -218,10 +218,10 @@ TextureImporter:
       name: johnson_animation_6
       rect:
         serializedVersion: 2
-        x: 9
-        y: 133
-        width: 12
-        height: 22
+        x: 0
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,7 +229,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c96ddaf1cc3c5640a5e48480e93df0e
+      spriteID: 36565fbb68c643a4dbccdc7dea5886bc
       vertices: []
       indices: 
       edges: []
@@ -238,10 +238,10 @@ TextureImporter:
       name: johnson_animation_7
       rect:
         serializedVersion: 2
-        x: 9
-        y: 101
-        width: 12
-        height: 22
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -249,7 +249,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8437a2f6f838d00489b09e9e6ae7a29c
+      spriteID: fe1268643b82e61459f334ee25bb8130
       vertices: []
       indices: 
       edges: []
@@ -258,10 +258,10 @@ TextureImporter:
       name: johnson_animation_8
       rect:
         serializedVersion: 2
-        x: 13
-        y: 70
-        width: 6
-        height: 21
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -269,7 +269,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4991eb4a75decee4bbb841e79c2e88fd
+      spriteID: 49dfe8b6864fe0e4fbae0ececb008801
       vertices: []
       indices: 
       edges: []
@@ -278,10 +278,10 @@ TextureImporter:
       name: johnson_animation_9
       rect:
         serializedVersion: 2
-        x: 11
-        y: 37
-        width: 9
-        height: 21
+        x: 0
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -289,7 +289,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2086735a218636e49875e1148bfcb850
+      spriteID: a9315bb8f6a6ca847a5704802fbbb1d0
       vertices: []
       indices: 
       edges: []
@@ -298,10 +298,10 @@ TextureImporter:
       name: johnson_animation_10
       rect:
         serializedVersion: 2
-        x: 15
-        y: 17
-        width: 2
-        height: 6
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -309,7 +309,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ceb0de5feb3d6b4459015172851f775d
+      spriteID: 03dadd6eac84f1248aec876640ac5276
       vertices: []
       indices: 
       edges: []

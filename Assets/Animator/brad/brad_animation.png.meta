@@ -98,18 +98,18 @@ TextureImporter:
       name: brad_animation_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 326
-        width: 13
-        height: 22
+        x: 0
+        y: 320
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6bb204719bb7ebd449ead4cddd3f75d9
+      spriteID: 169ba163d7ae0ff49a7254a485854a58
       vertices: []
       indices: 
       edges: []
@@ -118,18 +118,18 @@ TextureImporter:
       name: brad_animation_1
       rect:
         serializedVersion: 2
-        x: 9
-        y: 293
-        width: 13
-        height: 22
+        x: 0
+        y: 288
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8a35ad72e0c373c4bbbec23c2efcb22a
+      spriteID: fe09e8bda1e62b44ea560a4a4c26563f
       vertices: []
       indices: 
       edges: []
@@ -138,18 +138,18 @@ TextureImporter:
       name: brad_animation_2
       rect:
         serializedVersion: 2
-        x: 9
-        y: 262
-        width: 13
-        height: 22
+        x: 0
+        y: 256
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71c03d489b6f0d748b787af6cf8ab9be
+      spriteID: 45736c4e50812cd458bdbb0a7766aee4
       vertices: []
       indices: 
       edges: []
@@ -158,18 +158,18 @@ TextureImporter:
       name: brad_animation_3
       rect:
         serializedVersion: 2
-        x: 12
-        y: 230
-        width: 8
-        height: 21
+        x: 0
+        y: 224
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e46e4eac9ab7ac42a4c4d8d5d97441c
+      spriteID: 06908d6c9c027bd46bca4f33380495f6
       vertices: []
       indices: 
       edges: []
@@ -178,18 +178,18 @@ TextureImporter:
       name: brad_animation_4
       rect:
         serializedVersion: 2
-        x: 11
-        y: 198
-        width: 10
-        height: 21
+        x: 0
+        y: 192
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 46a95bf3c05cf5b47a91f04805fe470b
+      spriteID: 5d2a9d8bcf450334bb7817ea29be0200
       vertices: []
       indices: 
       edges: []
@@ -198,18 +198,18 @@ TextureImporter:
       name: brad_animation_5
       rect:
         serializedVersion: 2
-        x: 9
-        y: 166
-        width: 13
-        height: 22
+        x: 0
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a266ee9bd89f5ad41b28be69af15d6c0
+      spriteID: bdbcddc1b33b2a242918ba3420bbdd14
       vertices: []
       indices: 
       edges: []
@@ -218,18 +218,18 @@ TextureImporter:
       name: brad_animation_6
       rect:
         serializedVersion: 2
-        x: 9
-        y: 133
-        width: 13
-        height: 22
+        x: 0
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5939d3169d61fcc4fb5cb809904c5c3b
+      spriteID: 277bb88c44eb1a4408a5b9b6e9571aeb
       vertices: []
       indices: 
       edges: []
@@ -238,18 +238,18 @@ TextureImporter:
       name: brad_animation_7
       rect:
         serializedVersion: 2
-        x: 10
-        y: 101
-        width: 13
-        height: 22
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ac6cb49dfee92f247a2508a27c60b87b
+      spriteID: 35fa62aada3742a46a38c094feb7d404
       vertices: []
       indices: 
       edges: []
@@ -258,18 +258,18 @@ TextureImporter:
       name: brad_animation_8
       rect:
         serializedVersion: 2
-        x: 11
-        y: 70
-        width: 8
-        height: 21
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a8b514f295776984bbbc059229bda744
+      spriteID: 669b7f9b0d2e6c74d8a38d6152b19c10
       vertices: []
       indices: 
       edges: []
@@ -278,18 +278,18 @@ TextureImporter:
       name: brad_animation_9
       rect:
         serializedVersion: 2
-        x: 11
-        y: 38
-        width: 10
-        height: 21
+        x: 0
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ecb62179e8e6e9247a8e387d83ae87f3
+      spriteID: bf0bb2656e058ad46b3cc1db4454da84
       vertices: []
       indices: 
       edges: []
@@ -298,10 +298,10 @@ TextureImporter:
       name: brad_animation_10
       rect:
         serializedVersion: 2
-        x: 13
-        y: 14
-        width: 6
-        height: 6
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -309,7 +309,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c069767dfdddd5941871171a5d8b6a17
+      spriteID: d8d1ee64fd04f334d941997d3d0d47d7
       vertices: []
       indices: 
       edges: []

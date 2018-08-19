@@ -10,6 +10,7 @@ public class ManageRoom : MonoBehaviour {
     public Text playerText;
     public Text roomNameText;
     public Text lockedText;
+    private GameObject characterMenu;
     private string password;
 	// Use this for initialization
 	void Start () {
@@ -33,11 +34,14 @@ public class ManageRoom : MonoBehaviour {
         {
             lockedText.text = password;
         }
-
+        characterMenu = NetworkLobby.instance.CharacterPanel;
     }
 
     public void JoinRoom()
     {
-        NetworkLobby.instance.JoinRoom(roomNameText.text);
+        Debug.Log("Join");
+        CharacterMenu.roomName = roomNameText.text;
+        CharacterMenu.creatingRoom = false;
+        NetworkLobby.instance.ToMenuState(characterMenu);
     }
 }

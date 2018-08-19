@@ -74,7 +74,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -85,7 +85,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -98,10 +98,10 @@ TextureImporter:
       name: birgit_animation_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 326
-        width: 13
-        height: 21
+        x: 0
+        y: 320
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -109,7 +109,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4c1039e41a483f49b08c06ded9febf2
+      spriteID: 86e0c1736cddf4a4b9540989c6f719bb
       vertices: []
       indices: 
       edges: []
@@ -118,10 +118,10 @@ TextureImporter:
       name: birgit_animation_1
       rect:
         serializedVersion: 2
-        x: 10
-        y: 294
-        width: 13
-        height: 21
+        x: 0
+        y: 288
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -129,7 +129,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a85cbc0fc48abd24b90b2c8b069d6472
+      spriteID: 518cf9db3cf30074a890b1399bc9e84d
       vertices: []
       indices: 
       edges: []
@@ -138,10 +138,10 @@ TextureImporter:
       name: birgit_animation_2
       rect:
         serializedVersion: 2
-        x: 10
-        y: 262
-        width: 13
-        height: 21
+        x: 0
+        y: 256
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,7 +149,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b020e7998e139d9409496d4b868e847a
+      spriteID: 554fccf38e193fa448aa8742430ac0b6
       vertices: []
       indices: 
       edges: []
@@ -158,10 +158,10 @@ TextureImporter:
       name: birgit_animation_3
       rect:
         serializedVersion: 2
-        x: 12
-        y: 230
-        width: 8
-        height: 21
+        x: 0
+        y: 224
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,7 +169,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4cfa4fdd1621cd0439240aef604f1d29
+      spriteID: 8dfa972609b30934a9da20032f0ce7e2
       vertices: []
       indices: 
       edges: []
@@ -178,10 +178,10 @@ TextureImporter:
       name: birgit_animation_4
       rect:
         serializedVersion: 2
-        x: 12
-        y: 198
-        width: 10
-        height: 21
+        x: 0
+        y: 192
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -189,7 +189,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 49dfa79fc9c2bdd4f82fdd366f866579
+      spriteID: 457b4c38201d0374094550608a7c4980
       vertices: []
       indices: 
       edges: []
@@ -198,10 +198,10 @@ TextureImporter:
       name: birgit_animation_5
       rect:
         serializedVersion: 2
-        x: 10
-        y: 166
-        width: 13
-        height: 21
+        x: 0
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -209,7 +209,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ea2653e7045d2d40b3695b76823168a
+      spriteID: b5268407a225d0e48987cadf9e6f8c6e
       vertices: []
       indices: 
       edges: []
@@ -218,10 +218,10 @@ TextureImporter:
       name: birgit_animation_6
       rect:
         serializedVersion: 2
-        x: 10
-        y: 134
-        width: 13
-        height: 21
+        x: 0
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,7 +229,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9778e21191c6ca41b048794f560358b
+      spriteID: 46babc357f8d68d4ba4b01400dec2e14
       vertices: []
       indices: 
       edges: []
@@ -238,10 +238,10 @@ TextureImporter:
       name: birgit_animation_7
       rect:
         serializedVersion: 2
-        x: 10
-        y: 102
-        width: 13
-        height: 21
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -249,7 +249,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bfe84cc7fc83f544b98490196b20f659
+      spriteID: dc301cf0bc5fa8b4a88240828461cb06
       vertices: []
       indices: 
       edges: []
@@ -258,10 +258,10 @@ TextureImporter:
       name: birgit_animation_8
       rect:
         serializedVersion: 2
-        x: 12
-        y: 70
-        width: 8
-        height: 21
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -269,7 +269,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d7a5c14ab0c3184d8bcf64d5506fc09
+      spriteID: 9b493c75f8133f54bb127389709ccf76
       vertices: []
       indices: 
       edges: []
@@ -278,10 +278,10 @@ TextureImporter:
       name: birgit_animation_9
       rect:
         serializedVersion: 2
-        x: 11
-        y: 38
-        width: 10
-        height: 21
+        x: 0
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -289,7 +289,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8367fdb5c94855d48834e799c9a9f944
+      spriteID: 423ae0a9f508c084fabc4710f537366f
       vertices: []
       indices: 
       edges: []
@@ -298,10 +298,10 @@ TextureImporter:
       name: birgit_animation_10
       rect:
         serializedVersion: 2
-        x: 16
-        y: 14
-        width: 2
-        height: 6
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -309,7 +309,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ac6b8f1f3ab74744a30269f75f237e8
+      spriteID: f5e27e726ab0d774e889441dc386cd0a
       vertices: []
       indices: 
       edges: []

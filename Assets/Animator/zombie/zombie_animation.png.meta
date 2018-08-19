@@ -41,7 +41,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -97,10 +97,10 @@ TextureImporter:
       name: zombie_animation_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 295
-        width: 13
-        height: 21
+        x: 0
+        y: 288
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -108,7 +108,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1578096294f29cb46a6dcb951ab45214
+      spriteID: 9620d8ab52e57ad4f921b29d38dfe52b
       vertices: []
       indices: 
       edges: []
@@ -117,10 +117,10 @@ TextureImporter:
       name: zombie_animation_1
       rect:
         serializedVersion: 2
-        x: 10
-        y: 262
-        width: 13
-        height: 21
+        x: 0
+        y: 256
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,7 +128,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6749d54f5d0d6ee4b8ce5d0c7ba25d76
+      spriteID: 5cda4079417d9a34386309de73b940cd
       vertices: []
       indices: 
       edges: []
@@ -137,10 +137,10 @@ TextureImporter:
       name: zombie_animation_2
       rect:
         serializedVersion: 2
-        x: 9
-        y: 230
-        width: 13
-        height: 21
+        x: 0
+        y: 224
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,7 +148,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2cbba5dd23ed3f3438496fef55b4bd0e
+      spriteID: 110f6445cf62d2c40853fe4c5b48fed9
       vertices: []
       indices: 
       edges: []
@@ -157,10 +157,10 @@ TextureImporter:
       name: zombie_animation_3
       rect:
         serializedVersion: 2
-        x: 13
-        y: 198
-        width: 6
-        height: 21
+        x: 0
+        y: 192
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,7 +168,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a4940512ef30ee4cb6b4898d52f7897
+      spriteID: c8b7284a8dd1020409b64d0a42e2ffc1
       vertices: []
       indices: 
       edges: []
@@ -177,10 +177,10 @@ TextureImporter:
       name: zombie_animation_4
       rect:
         serializedVersion: 2
-        x: 13
-        y: 166
-        width: 9
-        height: 21
+        x: 0
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -188,7 +188,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4859f8a1554bc741b8133687f213b7c
+      spriteID: 46e76092788e5c74ea91759bf760ec86
       vertices: []
       indices: 
       edges: []
@@ -197,10 +197,10 @@ TextureImporter:
       name: zombie_animation_5
       rect:
         serializedVersion: 2
-        x: 10
-        y: 134
-        width: 13
-        height: 21
+        x: 0
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,7 +208,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 959c7bbd62ee7364bbd679a0aab67526
+      spriteID: c0a02b9122790df46a26ce09fca34c1b
       vertices: []
       indices: 
       edges: []
@@ -217,10 +217,10 @@ TextureImporter:
       name: zombie_animation_6
       rect:
         serializedVersion: 2
-        x: 10
-        y: 102
-        width: 13
-        height: 21
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -228,7 +228,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dae0b0dfaa6be954eb88c9215ab7a4a4
+      spriteID: 533f7eb264ceea04098b9c7f08f6c9ca
       vertices: []
       indices: 
       edges: []
@@ -237,10 +237,10 @@ TextureImporter:
       name: zombie_animation_7
       rect:
         serializedVersion: 2
-        x: 9
-        y: 70
-        width: 13
-        height: 21
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -248,7 +248,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d143d830aa918cd468d16d9343c0fb5b
+      spriteID: 647f447dafdd5c54e8551eb864b61641
       vertices: []
       indices: 
       edges: []
@@ -257,10 +257,10 @@ TextureImporter:
       name: zombie_animation_8
       rect:
         serializedVersion: 2
-        x: 13
-        y: 38
-        width: 6
-        height: 21
+        x: 0
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -268,7 +268,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73b6f4fd3c76c974aa2b5391bb9bf58b
+      spriteID: 7c30eca9ed63a734ea901d3d5665f1f6
       vertices: []
       indices: 
       edges: []
@@ -277,10 +277,10 @@ TextureImporter:
       name: zombie_animation_9
       rect:
         serializedVersion: 2
-        x: 11
-        y: 6
-        width: 9
-        height: 21
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -288,7 +288,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d79d00a5c35f4e419313b077582b60e
+      spriteID: c10ca150a3dc63b479d181460c22413f
       vertices: []
       indices: 
       edges: []

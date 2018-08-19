@@ -10,7 +10,7 @@ public class NetworkLobby : PunBehaviour
 
     public InputField usernameField;
     public InputField passwordField;
-    public GameObject loginPanel, roomPanel, createRoomPanel, inGamePanel, background, player;
+    public GameObject loginPanel, roomPanel, createRoomPanel, inGamePanel, CharacterPanel, background, player;
     public GameObject[] objectsToSpawn;
     private GameObject[] menuStates;
     public GameObject room;
@@ -41,7 +41,7 @@ public class NetworkLobby : PunBehaviour
             ToMenuState(roomPanel);
         }
         DontDestroyOnLoad(gameObject);
-        menuStates = new GameObject[] { loginPanel, roomPanel, createRoomPanel, inGamePanel };
+        menuStates = new GameObject[] { loginPanel, roomPanel, createRoomPanel, inGamePanel, CharacterPanel };
     }
 
     void Update()
@@ -167,7 +167,7 @@ public class NetworkLobby : PunBehaviour
         int id = PhotonNetwork.player.ID;
         string name = Database.Name;
         if ("".Equals(name)) name = "Guest" + id;
-        PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0, new object[] { id, name }).SetActive(true);
+        PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0, new object[] { id, name, (int)Animations.selectedAnimation}).SetActive(true);
     }
 
     private void SetupStage()
@@ -201,6 +201,8 @@ public class NetworkLobby : PunBehaviour
     {
         string name = createRoomNameField.text;
         if (name == null || name.Equals("")) return;
-        PhotonNetwork.CreateRoom(name);
+        CharacterMenu.roomName = name;
+        CharacterMenu.creatingRoom = true;
+        ToMenuState(CharacterPanel);
     }
 }
