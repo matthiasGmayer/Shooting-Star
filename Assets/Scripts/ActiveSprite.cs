@@ -6,16 +6,23 @@ using UnityEngine;
 public class ActiveSprite : MonoBehaviour
 {
     [SerializeField]
-    bool centerBottom;
+    bool centerBottomSprite, centerBottomParent;
+
+    public GameObject parent;
+
+    public int offset = 0;
     SpriteRenderer spriteRenderer;
-    void Start()
+    void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        if (centerBottom)
-            transform.position = new Vector3(0, spriteRenderer.sprite.texture.height / 4f / spriteRenderer.sprite.pixelsPerUnit, 0);
+        if (centerBottomSprite)
+            transform.position = new Vector3(transform.position.x , spriteRenderer.sprite.texture.height / 4f / spriteRenderer.sprite.pixelsPerUnit, 0);
+        if(centerBottomParent)
+            transform.parent.position += new Vector3(0, spriteRenderer.sprite.texture.height / 4f / spriteRenderer.sprite.pixelsPerUnit, 0);
+
     }
     void Update()
     {
-        spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.parent.transform.position.y * -Settings.Semi3Dprecision);
+        spriteRenderer.sortingOrder = Mathf.RoundToInt(parent.transform.position.y * -Settings.Semi3Dprecision) + offset;
     }
 }

@@ -16,18 +16,25 @@ public class PlayerController : MonoBehaviour
     private new Rigidbody2D rigidbody;
     public GameObject aim;
     public GameObject cam;
+    public GameObject arm;
+    public GameObject weapon;
+    private GameObject bulletSpawn;
     private NetworkPlayer networkPlayer;
     public Animator animator;
     public Vector2 animationMove = new Vector2();
     public int health;
     public int maxHealth = 30;
     public bool controlled = false;
-
+    public Vector3 armPosition;
+    private ActiveSprite armActiveSprite;
     // Use this for initialization
     void Start()
     {
         health = maxHealth;
         rigidbody = GetComponent<Rigidbody2D>();
+        armPosition = arm.transform.localPosition;
+        armActiveSprite = arm.GetComponentInChildren<ActiveSprite>();
+        bulletSpawn = weapon.transform.Find("Renderer").Find("BulletSpawn").gameObject;
     }
     void Awake()
     {
@@ -78,9 +85,34 @@ public class PlayerController : MonoBehaviour
                 move *= sprintFactor;
             }
             rigidbody.AddForce(move);
+            arm.transform.right = aim.transform.position - arm.transform.position;
+            arm.transform.Rotate(new Vector3(0, 0, 90));
         }
         animator.SetFloat("x", animationMove.x);
         animator.SetFloat("y", animationMove.y);
+    }
+    void Update()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("up"))
+        {
+            arm.transform.localPosition = new Vector3(-armPosition.x, armPosition.y, 0);
+            //armActiveSprite.offset = -10;
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("left"))
+        {
+            arm.transform.localPosition = new Vector3(0, armPosition.y, 0);
+            //armActiveSprite.offset = 10;
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("right"))
+        {
+            arm.transform.localPosition = new Vector3(0, armPosition.y, 0);
+            //armActiveSprite.offset = 10;
+        }
+        else
+        {
+            arm.transform.localPosition = armPosition;
+            //armActiveSprite.offset = 10;
+        }
     }
 
     void Fire()
@@ -90,7 +122,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         shootTime = 0;
-        Vector2 start = transform.position;
+        Vector2 start = bulletSpawn.transform.position;
         Vector2 target = aim.transform.position;
         float distance = (target - start).magnitude;
         target += UnityEngine.Random.insideUnitCircle * distance * spray / 10f;

@@ -32,7 +32,9 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
         }
         id = (int)photonView.instantiationData[0];
         nameText.text = (string)photonView.instantiationData[1];
-        GetComponentInChildren<Animator>().runtimeAnimatorController = Animations.GetAnimation((Animations.Character)(int)photonView.instantiationData[2]);
+        Animations.Character c = (Animations.Character)(int)photonView.instantiationData[2];
+        GetComponentInChildren<Animator>().runtimeAnimatorController = Animations.GetAnimation(c);
+        playerController.arm.GetComponentInChildren<SpriteRenderer>().sprite = Animations.GetArm(c);
         gameObject.name = "Player_" + id;
     }
 
@@ -52,7 +54,7 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
     private int bulletId = 0;
     public void FireBullet(int id, Vector2 start, Vector2 target, float speed)
     {
-        photonView.RPC("GenerateBullet", PhotonTargets.All, id, bulletId++, start, target, speed, PhotonNetwork.GetPing() / 1000f);
+        photonView.RPC("GenerateBullet", PhotonTargets.All, id, bulletId++, start, target, speed, PhotonNetwork.time);
     }
 
     [PunRPC]
@@ -70,7 +72,7 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
     }
 
     [PunRPC]
-    void GenerateBullet(int shooter, int bulletId, Vector2 start, Vector2 target, float speed, float ping)
+    void GenerateBullet(int shooter, int bulletId, Vector2 start, Vector2 target, float speed, double time)
     {
         GameObject bullet = Instantiate(this.bullet);
 
@@ -79,8 +81,8 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
 
         Vector2 position = start;
         bullet.transform.position = position;
-        Vector2 targetDirection = (target - position).normalized;
         Vector2 diff = target - position;
+        Vector2 targetDirection = diff.normalized;
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         bullet.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
 
@@ -88,7 +90,7 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
         rig.velocity = targetDirection * speed;
         if (shooter != PhotonNetwork.player.ID)
         {
-            rig.MovePosition(bullet.transform.position + (Vector3)rig.velocity * (PhotonNetwork.GetPing() / 1000f + ping));
+            rig.MovePosition(bullet.transform.position + (Vector3)rig.velocity * (float)(PhotonNetwork.time - time));
         }
 
     }
@@ -96,7 +98,7 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
     [PunRPC]
     void DestroyPlayerRCP(int id)
     {
-        Destroy(GameObject.Find("Player_" + id));        
+        Destroy(GameObject.Find("Player_" + id));
     }
 
     public void Destroy()
@@ -130,12 +132,13 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
         {
             stream.SendNext(health);
             stream.SendNext(playerController.animationMove);
+            stream.SendNext(playerController.arm.transform.right);
         }
         else
         {
             health = (int)stream.ReceiveNext();
             playerController.animationMove = (Vector2)stream.ReceiveNext();
-
+            playerController.arm.transform.right = (Vector3)stream.ReceiveNext();
         }
     }
 }

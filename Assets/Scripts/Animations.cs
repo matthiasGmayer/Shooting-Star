@@ -11,7 +11,26 @@ public class Animations : MonoBehaviour
 
     [SerializeField]
     private Sprite kevinSprite, birgitSprite, bradSprite, johnsonSprite, zombieSprite;
+    [SerializeField]
+    private Sprite kevinArm, birgitArm, bradArm, johnsonArm, zombieArm;
 
+    public static Sprite GetArm(Character a)
+    {
+        switch (a)
+        {
+            case Character.kevin:
+                return instance.kevinArm;
+            case Character.birgit:
+                return instance.birgitArm;
+            case Character.brad:
+                return instance.bradArm;
+            case Character.johnson:
+                return instance.johnsonArm;
+            case Character.zombie:
+                return instance.zombieArm;
+            default: return null;
+        }
+    }
     public static Sprite GetSprite(Character a)
     {
         switch (a)

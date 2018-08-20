@@ -70,7 +70,7 @@ public class Database : MonoBehaviour
 
     public static void Login(string username, string password)
     {
-        string sessionId = GetLine(Command("!AccountSystem/loginlater", "user=" + username, "password=" + password, "lira=1"));
+        string sessionId = GetLine(Command("!AccountSystem/loginlater", "user=" + username, "password=" + password, "lira=2"));
         Debug.Log(sessionId);
         int id;
         if (int.TryParse(sessionId, out id))

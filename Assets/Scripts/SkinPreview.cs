@@ -8,7 +8,7 @@ public class SkinPreview : MonoBehaviour {
 
     Animations.Character character;
 
-    public GameObject image;
+    public GameObject selectImage, characterImage, armImage;
     // Use this for initialization
     void Start () {
 		
@@ -18,11 +18,11 @@ public class SkinPreview : MonoBehaviour {
 	void Update () {
 		if(selected == this)
         {
-            if (!image.activeSelf) image.SetActive(true);
+            if (!selectImage.activeSelf) selectImage.SetActive(true);
         }
         else
         {
-            if (image.activeSelf) image.SetActive(false);
+            if (selectImage.activeSelf) selectImage.SetActive(false);
         }
     }
 
@@ -30,7 +30,8 @@ public class SkinPreview : MonoBehaviour {
     {
         this.character = character;
         GetComponentInChildren<Animator>().runtimeAnimatorController = Animations.GetAnimation(character);
-        transform.Find("Size").transform.Find("Image").GetComponent<UnityEngine.UI.Image>().sprite = Animations.GetSprite(character);
+        characterImage.GetComponent<UnityEngine.UI.Image>().sprite = Animations.GetSprite(character);
+        armImage.GetComponent<UnityEngine.UI.Image>().sprite = Animations.GetArm(character);
     }
 
     public void SetAnimation()
