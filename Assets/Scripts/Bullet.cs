@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.name.Equals("PlayerCollider")) return;
+        if (col.gameObject.name.Contains("Player")) return;
         if (shooter == null||col.gameObject.name.Equals(shooter.name)) return;
         Destroy();
     }

@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public GameObject weapon;
     private GameObject weaponChild;
     private GameObject bulletSpawn;
+    public Collider2D bulletCollider;
     private NetworkPlayer networkPlayer;
     public Animator animator;
     public Vector2 animationMove = new Vector2();
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         armPosition = arm.transform.localPosition;
         armActiveSprite = arm.GetComponentInChildren<ActiveSprite>();
-        SetWeapon(Weapons.Weapon.mp40);
+        SetWeapon(Weapons.Weapon.lugger);
     }
     void Awake()
     {
@@ -169,6 +170,7 @@ public class PlayerController : MonoBehaviour
         shootDelay = ws.ShootDelay;
         spray = ws.Spray;
         damage = ws.Damage;
+        Debug.Log(damage);
     }
 
 
@@ -189,16 +191,18 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        
         if (col.gameObject.name.Contains("Bullet_"))
         {
+            if (!bulletCollider.IsTouching(col)) return;
             string[] info = col.gameObject.name.Split('_');
             int shooterId = int.Parse(info[1]);
             if (networkPlayer.id != shooterId)
             {
                 if (controlled)
                 {
-                    networkPlayer.Damage(int.Parse(info[2]));
                     networkPlayer.DestroyBullet(col.gameObject);
+                    networkPlayer.Damage(int.Parse(info[3]));
                 }
             }
         }

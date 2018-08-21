@@ -69,7 +69,8 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
     public void DestroyBullet(GameObject gameObject)
     {
         if (!PhotonNetwork.connected) return;
-        photonView.RPC("DestroyBulletRCP", PhotonTargets.All, gameObject.name);
+        DestroyBulletRCP(gameObject.name);
+        photonView.RPC("DestroyBulletRCP", PhotonTargets.Others, gameObject.name);
     }
 
     [PunRPC]
@@ -80,7 +81,7 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
 
     public void SetWeapon(Weapons.Weapon w)
     {
-        photonView.RPC("SetWeaponRPC", PhotonTargets.All, new object[] { (int)w });
+        photonView.RPC("SetWeaponRPC", PhotonTargets.All, (int)w);
     }
 
     [PunRPC]
