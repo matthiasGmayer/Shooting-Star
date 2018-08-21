@@ -32,9 +32,9 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
         }
         id = (int)photonView.instantiationData[0];
         nameText.text = (string)photonView.instantiationData[1];
-        Animations.Character c = (Animations.Character)(int)photonView.instantiationData[2];
-        GetComponentInChildren<Animator>().runtimeAnimatorController = Animations.GetAnimation(c);
-        playerController.arm.GetComponentInChildren<SpriteRenderer>().sprite = Animations.GetArm(c);
+        Characters.Character c = (Characters.Character)(int)photonView.instantiationData[2];
+        GetComponentInChildren<Animator>().runtimeAnimatorController = Characters.GetAnimation(c);
+        playerController.arm.GetComponentInChildren<SpriteRenderer>().sprite = Characters.GetArm(c);
         gameObject.name = "Player_" + id;
     }
 

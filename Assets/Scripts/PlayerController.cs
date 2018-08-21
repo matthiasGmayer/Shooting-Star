@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public bool controlled = false;
     public Vector3 armPosition;
     private ActiveSprite armActiveSprite;
+    public ActiveSprite weaponActiveSprite;
     // Use this for initialization
     void Start()
     {
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         armPosition = arm.transform.localPosition;
         armActiveSprite = arm.GetComponentInChildren<ActiveSprite>();
+        weaponActiveSprite = weapon.GetComponentInChildren<ActiveSprite>();
         bulletSpawn = weapon.transform.Find("Renderer").Find("BulletSpawn").gameObject;
     }
     void Awake()
@@ -93,26 +95,31 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        int offset = 1;
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("up"))
         {
             arm.transform.localPosition = new Vector3(-armPosition.x, armPosition.y, 0);
-            //armActiveSprite.offset = -10;
+            offset = -2;
         }
         else if (animator.GetCurrentAnimatorStateInfo(0).IsName("left"))
         {
             arm.transform.localPosition = new Vector3(0, armPosition.y, 0);
-            //armActiveSprite.offset = 10;
         }
         else if (animator.GetCurrentAnimatorStateInfo(0).IsName("right"))
         {
             arm.transform.localPosition = new Vector3(0, armPosition.y, 0);
-            //armActiveSprite.offset = 10;
         }
         else
         {
             arm.transform.localPosition = armPosition;
-            //armActiveSprite.offset = 10;
         }
+        SetArmOffset(offset);
+    }
+
+    void SetArmOffset(int o)
+    {
+        armActiveSprite.offset = o;
+        weaponActiveSprite.offset = o + 1;
     }
 
     void Fire()

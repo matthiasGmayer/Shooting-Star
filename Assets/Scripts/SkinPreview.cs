@@ -6,7 +6,7 @@ public class SkinPreview : MonoBehaviour {
 
     private static SkinPreview selected = null;
 
-    Animations.Character character;
+    Characters.Character character;
 
     public GameObject selectImage, characterImage, armImage;
     // Use this for initialization
@@ -26,17 +26,17 @@ public class SkinPreview : MonoBehaviour {
         }
     }
 
-    public void Init(Animations.Character character)
+    public void Init(Characters.Character character)
     {
         this.character = character;
-        GetComponentInChildren<Animator>().runtimeAnimatorController = Animations.GetAnimation(character);
-        characterImage.GetComponent<UnityEngine.UI.Image>().sprite = Animations.GetSprite(character);
-        armImage.GetComponent<UnityEngine.UI.Image>().sprite = Animations.GetArm(character);
+        GetComponentInChildren<Animator>().runtimeAnimatorController = Characters.GetAnimation(character);
+        characterImage.GetComponent<UnityEngine.UI.Image>().sprite = Characters.GetSprite(character);
+        armImage.GetComponent<UnityEngine.UI.Image>().sprite = Characters.GetArm(character);
     }
 
     public void SetAnimation()
     {
-        Animations.selectedAnimation = character;
+        Characters.selectedAnimation = character;
         selected = this;
     }
 

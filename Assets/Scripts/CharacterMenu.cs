@@ -16,10 +16,10 @@ public class CharacterMenu : MonoBehaviour {
     }
     // Use this for initialization
     void Start () {
-        int length = Enum.GetNames(typeof(Animations.Character)).Length;
+        int length = Enum.GetNames(typeof(Characters.Character)).Length;
         for (int i = 0; i < length; i++)
         {
-            Animations.Character c = (Animations.Character)i;
+            Characters.Character c = (Characters.Character)i;
             GameObject o = Instantiate(SkinPreview, gameObject.transform);
             o.transform.localPosition = new Vector3((i-length/2)*100, 0, 0);
             o.GetComponent<SkinPreview>().Init(c);

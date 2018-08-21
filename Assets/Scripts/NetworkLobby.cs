@@ -167,7 +167,7 @@ public class NetworkLobby : PunBehaviour
         int id = PhotonNetwork.player.ID;
         string name = Database.Name;
         if ("".Equals(name)) name = "Guest" + id;
-        PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0, new object[] { id, name, (int)Animations.selectedAnimation}).SetActive(true);
+        PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0, new object[] { id, name, (int)Characters.selectedAnimation}).SetActive(true);
     }
 
     private void SetupStage()
