@@ -8,7 +8,8 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
 
     public Camera cam;
     public GameObject aim, bullet, healthBar;
-    public int id, health, maxHealth = 30;
+    public int id;
+    private int health, maxHealth = 100;
     public UnityEngine.UI.Text nameText;
     public UnityEngine.UI.Text damageText;
     private PlayerController playerController;
@@ -52,9 +53,9 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
     private float correctPlayerRot;
 
     private int bulletId = 0;
-    public void FireBullet(int id, Vector2 start, Vector2 target, float speed)
+    public void FireBullet(int id, Vector2 start, Vector2 target, float speed, int damage)
     {
-        photonView.RPC("GenerateBullet", PhotonTargets.All, id, bulletId++, start, target, speed, PhotonNetwork.time);
+        photonView.RPC("GenerateBullet", PhotonTargets.All, id, bulletId++, start, target, speed, damage, PhotonNetwork.time);
     }
 
     [PunRPC]
@@ -72,11 +73,22 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
     }
 
     [PunRPC]
-    void GenerateBullet(int shooter, int bulletId, Vector2 start, Vector2 target, float speed, double time)
+    void SetWeaponRPC(int weapon)
+    {
+        playerController.SetWeapon((Weapons.Weapon)weapon);
+    }
+
+    public void SetWeapon(Weapons.Weapon w)
+    {
+        photonView.RPC("SetWeaponRPC", PhotonTargets.All, new object[] { (int)w });
+    }
+
+    [PunRPC]
+    void GenerateBullet(int shooter, int bulletId, Vector2 start, Vector2 target, float speed, int damage, double time)
     {
         GameObject bullet = Instantiate(this.bullet);
 
-        bullet.name = "Bullet_" + shooter + "_" + bulletId;
+        bullet.name = "Bullet_" + shooter + "_" + bulletId + "_" + damage;
         bullet.GetComponent<Bullet>().shooter = gameObject;
 
         Vector2 position = start;

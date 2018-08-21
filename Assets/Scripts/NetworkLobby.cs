@@ -187,7 +187,6 @@ public class NetworkLobby : PunBehaviour
         {
             Vector3 position = new Vector3((UnityEngine.Random.value * 2 - 1) * width, (UnityEngine.Random.value * 2 - 1) * height, 0);
             int name = (int)(UnityEngine.Random.value * names.Length);
-            Debug.Log(name);
             PhotonNetwork.InstantiateSceneObject(names[name], position, Quaternion.identity, 0, null);
         }
     }
