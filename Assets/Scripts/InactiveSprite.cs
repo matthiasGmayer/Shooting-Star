@@ -6,8 +6,10 @@ using UnityEngine;
 public class InactiveSprite : MonoBehaviour
 {
 
+    public GameObject parent;
     void Start()
     {
-        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.parent.position.y * -Settings.Semi3Dprecision);
+        float y = parent == null ? transform.parent.position.y : parent.transform.position.y;
+        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(y * -Settings.Semi3Dprecision);
     }
 }

@@ -41,6 +41,15 @@ public class Settings : MonoBehaviour {
         }
     }
     [SerializeField]
+    private bool logConnection;
+    public static bool LogConnection
+    {
+        get
+        {
+            return instance.logConnection;
+        }
+    }
+    [SerializeField]
     private string database;
     public static string Database
     {
@@ -82,6 +91,7 @@ public class Settings : MonoBehaviour {
 
     void Update()
     {
-        Debug.Log(PhotonNetwork.connectionState);
+        if(LogConnection)
+            Debug.Log(PhotonNetwork.connectionState);
     }
 }

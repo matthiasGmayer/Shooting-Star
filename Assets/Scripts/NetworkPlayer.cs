@@ -106,6 +106,9 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
             rig.MovePosition(bullet.transform.position + (Vector3)rig.velocity * (float)(PhotonNetwork.time - time));
         }
 
+        playerController.FireAnim();
+        playerController.FireSound();
+
     }
 
     [PunRPC]
@@ -146,12 +149,14 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
             stream.SendNext(health);
             stream.SendNext(playerController.animationMove);
             stream.SendNext(playerController.arm.transform.right);
+            stream.SendNext(playerController.currentWeapon);
         }
         else
         {
             health = (int)stream.ReceiveNext();
             playerController.animationMove = (Vector2)stream.ReceiveNext();
             playerController.arm.transform.right = (Vector3)stream.ReceiveNext();
+            playerController.CheckWeapon((Weapons.Weapon)stream.ReceiveNext());
         }
     }
 }
