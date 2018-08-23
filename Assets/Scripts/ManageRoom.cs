@@ -34,7 +34,7 @@ public class ManageRoom : MonoBehaviour {
         {
             lockedText.text = password;
         }
-        characterMenu = NetworkLobby.instance.CharacterPanel;
+        characterMenu = NetworkLobby.instance.characterPanel;
     }
 
     public void JoinRoom()

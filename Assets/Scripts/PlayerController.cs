@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.Alpha1)) CheckWeapon(Weapons.Weapon.lugger);
             if (Input.GetKey(KeyCode.Alpha2)) CheckWeapon(Weapons.Weapon.karabiner);
             if (Input.GetKey(KeyCode.Alpha3)) CheckWeapon(Weapons.Weapon.mp40);
-            if (Input.GetKey(KeyCode.Q)) networkPlayer.Damage(1);
+            //if (Input.GetKey(KeyCode.Q)) networkPlayer.Damage(1, 0);
 
             shootTime += Time.deltaTime;
             move = new Vector2();
@@ -252,7 +252,7 @@ public class PlayerController : MonoBehaviour
                 if (controlled)
                 {
                     networkPlayer.DestroyBullet(col.gameObject);
-                    networkPlayer.Damage(int.Parse(info[3]));
+                    networkPlayer.Damage(int.Parse(info[3]), shooterId);
                 }
             }
         }

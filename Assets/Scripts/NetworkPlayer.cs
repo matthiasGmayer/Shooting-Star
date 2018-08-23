@@ -6,11 +6,18 @@ using UnityEngine;
 public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
 {
 
-    public Camera cam;
-    public GameObject aim, bullet, healthBar;
+    public GameObject cam;
+    public GameObject bullet, healthBar;
     public int id;
-    private int health, maxHealth = 100;
+    public int health, maxHealth = 100, kills, deaths;
     public UnityEngine.UI.Text nameText;
+    private string Name
+    {
+        get
+        {
+            return nameText.text;
+        }
+    }
     public UnityEngine.UI.Text damageText;
     private PlayerController playerController;
 
@@ -26,13 +33,16 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
         if (photonView.isMine)
         {
             //Camera.main.enabled = false;
-            cam.enabled = true;
-            aim.SetActive(true);
+            cam.SetActive(true);
+            //aim.SetActive(true);
             playerController.controlled = true;
             cam.transform.parent = null;
         }
         id = (int)photonView.instantiationData[0];
         nameText.text = (string)photonView.instantiationData[1];
+        NetworkLobby.instance.playerNames.Add(id, Name);
+        NetworkLobby.instance.playerKills.Add(id, 0);
+        NetworkLobby.instance.playerDeaths.Add(id, 0);
         Characters.Character c = (Characters.Character)(int)photonView.instantiationData[2];
         GetComponentInChildren<Animator>().runtimeAnimatorController = Characters.GetAnimation(c);
         playerController.arm.GetComponentInChildren<SpriteRenderer>().sprite = Characters.GetArm(c);
@@ -123,22 +133,32 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
         DestroySelf();
         PhotonNetwork.Disconnect();
     }
-    public void Die()
+
+    [PunRPC]
+    void AddKillRPC(int id)
+    {
+        if (NetworkLobby.instance.myId == id)
+            NetworkLobby.instance.myPlayer.GetComponent<NetworkPlayer>().kills++;
+        //GameObject.Find("Player_" + id).GetComponent<NetworkPlayer>().kills++;
+    }
+
+    public void Die(int shooter)
     {
         transform.position = new Vector3();
         health = maxHealth;
+        deaths++;
+        photonView.RPC("AddKillRPC", PhotonTargets.All, shooter);
     }
     void DestroySelf()
     {
-        Destroy(aim);
-        Destroy(cam.gameObject);
+        Destroy(cam);
         Destroy(gameObject);
     }
 
-    public void Damage(int amount)
+    public void Damage(int amount, int shooter)
     {
         health -= amount;
-        if (health <= 0) Die();
+        if (health <= 0) Die(shooter);
 
     }
 
@@ -147,6 +167,8 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
         if (stream.isWriting)
         {
             stream.SendNext(health);
+            stream.SendNext(kills);
+            stream.SendNext(deaths);
             stream.SendNext(playerController.animationMove);
             stream.SendNext(playerController.arm.transform.right);
             stream.SendNext(playerController.currentWeapon);
@@ -154,9 +176,13 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
         else
         {
             health = (int)stream.ReceiveNext();
+            kills = (int)stream.ReceiveNext();
+            deaths = (int)stream.ReceiveNext();
             playerController.animationMove = (Vector2)stream.ReceiveNext();
             playerController.arm.transform.right = (Vector3)stream.ReceiveNext();
             playerController.CheckWeapon((Weapons.Weapon)stream.ReceiveNext());
         }
+        NetworkLobby.instance.playerKills[id] = kills;
+        NetworkLobby.instance.playerDeaths[id] = deaths;
     }
 }

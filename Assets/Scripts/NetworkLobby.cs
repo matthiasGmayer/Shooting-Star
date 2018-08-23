@@ -10,7 +10,7 @@ public class NetworkLobby : PunBehaviour
 
     public InputField usernameField;
     public InputField passwordField;
-    public GameObject loginPanel, roomPanel, createRoomPanel, inGamePanel, CharacterPanel, background, player;
+    public GameObject loginPanel, roomPanel, createRoomPanel, inGamePanel, characterPanel, statPanel, background, player;
     public GameObject[] objectsToSpawn;
     private GameObject[] menuStates;
     public GameObject room;
@@ -18,6 +18,12 @@ public class NetworkLobby : PunBehaviour
     public InputField createRoomNameField;
     public InputField createRoomPasswordField;
     public Slider createRoomMaxPlayers;
+
+    public GameObject myPlayer;
+    public int myId;
+    public Dictionary<int, string> playerNames = new Dictionary<int, string>();
+    public Dictionary<int, int> playerKills = new Dictionary<int, int>();
+    public Dictionary<int, int> playerDeaths = new Dictionary<int, int>();
 
     public static NetworkLobby instance;
 
@@ -41,15 +47,23 @@ public class NetworkLobby : PunBehaviour
             ToMenuState(roomPanel);
         }
         DontDestroyOnLoad(gameObject);
-        menuStates = new GameObject[] { loginPanel, roomPanel, createRoomPanel, inGamePanel, CharacterPanel };
+        menuStates = new GameObject[] { loginPanel, roomPanel, createRoomPanel, inGamePanel, characterPanel, statPanel };
     }
 
     void Update()
     {
-        if (PhotonNetwork.inRoom && Input.GetKeyDown(KeyCode.Escape))
+        if (PhotonNetwork.inRoom)
         {
-            inGamePanel.SetActive(!inGamePanel.activeSelf);
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                inGamePanel.SetActive(!inGamePanel.activeSelf);
+            }
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                statPanel.SetActive(!statPanel.activeSelf);
+            }
         }
+
     }
 
     public void Connect()
@@ -111,7 +125,8 @@ public class NetworkLobby : PunBehaviour
     {
         PhotonNetwork.LeaveRoom();
         ToMenuState(roomPanel);
-        Destroy(GameObject.Find("PlayerCamera"));
+        myPlayer.GetComponent<NetworkPlayer>().Destroy();
+        //Destroy(GameObject.Find("PlayerCamera"));
         //background.SetActive(false);
     }
     public void ToMenuState(GameObject o)
@@ -160,14 +175,13 @@ public class NetworkLobby : PunBehaviour
         PhotonNetwork.room.MaxPlayers = (int)createRoomMaxPlayers.value;
         base.OnCreatedRoom();
         SetupStage();
-
     }
     private void Spawn()
     {
-        int id = PhotonNetwork.player.ID;
+        myId = PhotonNetwork.player.ID;
         string name = Database.Name;
-        if ("".Equals(name)) name = "Guest" + id;
-        PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0, new object[] { id, name, (int)Characters.selectedAnimation}).SetActive(true);
+        if ("".Equals(name)) name = "Guest" + myId;
+        myPlayer = PhotonNetwork.Instantiate(player.gameObject.name, Vector3.zero, Quaternion.identity, 0, new object[] { myId, name, (int)Characters.selectedAnimation });
     }
 
     private void SetupStage()
@@ -202,6 +216,6 @@ public class NetworkLobby : PunBehaviour
         if (name == null || name.Equals("")) return;
         CharacterMenu.roomName = name;
         CharacterMenu.creatingRoom = true;
-        ToMenuState(CharacterPanel);
+        ToMenuState(characterPanel);
     }
 }
