@@ -7,10 +7,13 @@ public class Weapon : MonoBehaviour {
     private float spray, speed, shootDelay, reloadTime;
     [SerializeField]
     private int damage, magazinSize;
+    [SerializeField]
+    private AudioClip audioClip;
     public float Spray { get { return spray; } }
     public float Speed { get { return speed; } }
     public float ShootDelay { get { return shootDelay; } }
     public int Damage { get { return damage; } }
     public int MagazinSize { get { return magazinSize; } }
     public float ReloadTime { get { return reloadTime; } }
+    public AudioClip Audio { get { return audioClip; } }
 }

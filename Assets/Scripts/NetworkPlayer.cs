@@ -6,7 +6,7 @@ using UnityEngine;
 public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
 {
 
-    public GameObject cam;
+    public GameObject cam, audioObject;
     public GameObject bullet, healthBar;
     public int id;
     public int health, maxHealth = 100, kills, deaths;
@@ -36,6 +36,7 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
             cam.SetActive(true);
             //aim.SetActive(true);
             playerController.controlled = true;
+            audioObject.GetComponent<AudioListener>().enabled = true;
             cam.transform.parent = null;
         }
         id = (int)photonView.instantiationData[0];
@@ -63,9 +64,9 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
     private float correctPlayerRot;
 
     private int bulletId = 0;
-    public void FireBullet(int id, Vector2 start, Vector2 target, float speed, int damage)
+    public void FireBullet(int id, Vector2 start, float rot, float speed, int damage)
     {
-        photonView.RPC("GenerateBullet", PhotonTargets.All, id, bulletId++, start, target, speed, damage, PhotonNetwork.time);
+        photonView.RPC("GenerateBullet", PhotonTargets.All, id, bulletId++, start, rot, speed, damage, PhotonNetwork.time);
     }
 
     [PunRPC]
@@ -95,22 +96,19 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
     }
 
     [PunRPC]
-    void GenerateBullet(int shooter, int bulletId, Vector2 start, Vector2 target, float speed, int damage, double time)
+    void GenerateBullet(int shooter, int bulletId, Vector2 start, float rot, float speed, int damage, double time)
     {
         GameObject bullet = Instantiate(this.bullet);
 
         bullet.name = "Bullet_" + shooter + "_" + bulletId + "_" + damage;
         bullet.GetComponent<Bullet>().shooter = gameObject;
 
-        Vector2 position = start;
-        bullet.transform.position = position;
-        Vector2 diff = target - position;
-        Vector2 targetDirection = diff.normalized;
-        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-        bullet.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
-
+        bullet.transform.rotation = Quaternion.Euler(0f, 0f, rot);
+        bullet.transform.position = start;
         Rigidbody2D rig = bullet.GetComponent<Rigidbody2D>();
-        rig.velocity = targetDirection * speed;
+        rot -= 90;
+        rot *= Mathf.Deg2Rad;
+        rig.velocity = new Vector2(Mathf.Cos(rot), Mathf.Sin(rot)) * speed;
         if (shooter != PhotonNetwork.player.ID)
         {
             rig.MovePosition(bullet.transform.position + (Vector3)rig.velocity * (float)(PhotonNetwork.time - time));
@@ -170,7 +168,7 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
             stream.SendNext(kills);
             stream.SendNext(deaths);
             stream.SendNext(playerController.animationMove);
-            stream.SendNext(playerController.arm.transform.right);
+            stream.SendNext(playerController.arm.transform.rotation);
             stream.SendNext(playerController.currentWeapon);
         }
         else
@@ -179,7 +177,7 @@ public class NetworkPlayer : Photon.MonoBehaviour, IPunObservable
             kills = (int)stream.ReceiveNext();
             deaths = (int)stream.ReceiveNext();
             playerController.animationMove = (Vector2)stream.ReceiveNext();
-            playerController.arm.transform.right = (Vector3)stream.ReceiveNext();
+            playerController.arm.transform.rotation = (Quaternion)stream.ReceiveNext();
             playerController.CheckWeapon((Weapons.Weapon)stream.ReceiveNext());
         }
         NetworkLobby.instance.playerKills[id] = kills;

@@ -109,6 +109,28 @@ public class NetworkLobby : PunBehaviour
             room.GetComponent<ManageRoom>().Init(roomInfo);
         }
     }
+    void Reset()
+    {
+        playerNames.Clear();
+        playerDeaths.Clear();
+        playerKills.Clear();
+    }
+
+    public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
+    {
+        playerNames.Remove(otherPlayer.ID);
+        playerDeaths.Remove(otherPlayer.ID);
+        playerKills.Remove(otherPlayer.ID);
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        foreach (var g in GameObject.FindGameObjectsWithTag("Bullet"))
+        {
+            Destroy(g);
+        }
+    }
 
     public void PlayAsGuest()
     {
@@ -126,6 +148,7 @@ public class NetworkLobby : PunBehaviour
         PhotonNetwork.LeaveRoom();
         ToMenuState(roomPanel);
         myPlayer.GetComponent<NetworkPlayer>().Destroy();
+        Reset();
         //Destroy(GameObject.Find("PlayerCamera"));
         //background.SetActive(false);
     }
@@ -138,6 +161,8 @@ public class NetworkLobby : PunBehaviour
         }
         if (o != null)
             o.SetActive(true);
+        if (o == roomPanel)
+            Invoke("RefreshRooms", 0.01f);
     }
 
     public override void OnDisconnectedFromPhoton()
@@ -155,7 +180,6 @@ public class NetworkLobby : PunBehaviour
     {
         ToMenuState(roomPanel);
         base.OnJoinedLobby();
-        Invoke("RefreshRooms", 0.01f);
     }
     public override void OnJoinedRoom()
     {

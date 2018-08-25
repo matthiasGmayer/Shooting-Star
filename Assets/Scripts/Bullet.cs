@@ -36,7 +36,7 @@ public class Bullet : MonoBehaviour {
             DestroySelf();
             return;
         }
-        if (PhotonNetwork.player.ID == int.Parse(shooter.name.Split('_')[1]))
+        else if (PhotonNetwork.player.ID == int.Parse(shooter.name.Split('_')[1]))
             shooter.GetComponent<NetworkPlayer>().DestroyBullet(gameObject);
         else if(Settings.DestroyClientBulletsOnHit)
             DestroySelf();

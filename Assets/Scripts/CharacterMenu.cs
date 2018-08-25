@@ -38,10 +38,10 @@ public class CharacterMenu : MonoBehaviour {
         else
             NetworkLobby.instance.JoinRoom(roomName);
     }
-    public void Back(GameObject o)
+    public void Back()
     {
-        if (creatingRoom)
-            PhotonNetwork.LeaveRoom();
-        NetworkLobby.instance.ToMenuState(o);
+        //if (creatingRoom)
+        //    PhotonNetwork.LeaveRoom();
+        NetworkLobby.instance.ToMenuState(creatingRoom ? NetworkLobby.instance.createRoomPanel : NetworkLobby.instance.roomPanel);
     }
 }

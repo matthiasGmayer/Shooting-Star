@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
     private Transform bulletSpawn, shellSpawn;
     public Collider2D bulletCollider;
     private GameObject weaponFire;
-    private RotateWeapon rotateWeaponScript;
     private NetworkPlayer networkPlayer;
     public Animator animator;
     public Vector2 animationMove = new Vector2();
@@ -29,7 +28,8 @@ public class PlayerController : MonoBehaviour
     public GameObject playerRenderer;
     private Vector3 renderPosition;
     private float spray, speed, shootDelay, reloadTime;
-    private AudioSource fireSound;
+    public AudioSource audioSource;
+    private AudioClip fireClip;
     private int damage, magazinSize, shootCount = 0;
     public Weapons.Weapon currentWeapon;
     // Use this for initialization
@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         armPosition = arm.transform.localPosition;
         armActiveSprite = arm.GetComponentInChildren<ActiveSprite>();
-        rotateWeaponScript = arm.GetComponentInChildren<RotateWeapon>();
         SetWeapon(Weapons.Weapon.lugger);
     }
     void Awake()
@@ -117,11 +116,11 @@ public class PlayerController : MonoBehaviour
     private static readonly float animOffset = 0.01f;
     private static readonly Vector2[][] animVectors = new Vector2[][]
     {
-        new Vector2[]{new Vector2(0,0), new Vector2(animOffset, animOffset), new Vector2(0,0), new Vector2(-animOffset, animOffset) },
+        new Vector2[]{new Vector2(0, 0), new Vector2(animOffset, animOffset), new Vector2(0, 0), new Vector2(-animOffset, animOffset) },
         new Vector2[]{new Vector2(0,0), new Vector2(0,0), new Vector2(animOffset, 0), new Vector2(animOffset, 0)},
         new Vector2[]{new Vector2(0,0), new Vector2(0,0), new Vector2(-animOffset, 0), new Vector2(-animOffset, 0)},
-        new Vector2[]{ new Vector2(0, 0), new Vector2(animOffset, -animOffset), new Vector2(0, 0), new Vector2(-animOffset, -animOffset) },
-        new Vector2[]{ new Vector2(0, 0), new Vector2(0, -animOffset / 10f), new Vector2(0, 0), new Vector2(0, animOffset / 10f) }
+        new Vector2[]{new Vector2(0, 0), new Vector2(animOffset, -animOffset), new Vector2(0, 0), new Vector2(-animOffset, -animOffset) },
+        new Vector2[]{new Vector2(0, 0), new Vector2(0, -animOffset / 10f), new Vector2(0, 0), new Vector2(0, animOffset / 10f) }
     };
     void Update()
     {
@@ -185,26 +184,24 @@ public class PlayerController : MonoBehaviour
         weaponFireActiveSprite = weaponFire.GetComponentInChildren<ActiveSprite>();
         weaponFireActiveSprite.parent = gameObject;
         Weapon ws = weaponChild.GetComponent<Weapon>();
-        rotateWeaponScript.Setup(weaponFire.transform);
         speed = ws.Speed;
         shootDelay = ws.ShootDelay;
         spray = ws.Spray;
         damage = ws.Damage;
         reloadTime = ws.ReloadTime;
         magazinSize = ws.MagazinSize;
+        fireClip = ws.Audio;
         shootCount = 0;
-        fireSound = weaponChild.GetComponentInChildren<AudioSource>();
-        Debug.Log(fireSound.name);
     }
 
     public void FireSound()
     {
-        fireSound.Play();
+        audioSource.PlayOneShot(fireClip);
     }
 
     void Fire()
     {
-        if(magazinSize < shootCount)
+        if (magazinSize <= shootCount)
         {
             shootCount = 0;
             shootTime = -reloadTime;
@@ -216,10 +213,10 @@ public class PlayerController : MonoBehaviour
         shootCount++;
         shootTime = 0;
         Vector2 start = bulletSpawn.transform.position;
-        Vector2 target = aim.transform.position;
-        float distance = (target - start).magnitude;
-        target += UnityEngine.Random.insideUnitCircle * distance * spray / 10f;
-        networkPlayer.FireBullet(networkPlayer.id, start, target, speed, damage);
+        //Vector2 target = aim.transform.position;
+        //float distance = (target - start).magnitude;
+        //target += UnityEngine.Random.insideUnitCircle * distance * spray / 10f;
+        networkPlayer.FireBullet(networkPlayer.id, start, arm.transform.rotation.eulerAngles.z + (UnityEngine.Random.value - 0.5f) * spray, speed, damage);
     }
 
     public void FireAnim()
@@ -241,7 +238,7 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        
+
         if (col.gameObject.name.Contains("Bullet_"))
         {
             if (!bulletCollider.IsTouching(col)) return;
