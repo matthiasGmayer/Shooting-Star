@@ -1,2 +1,2 @@
 # Shooting-Star
-Download: https://github.com/matthiasGmayer/Shooting-Star
+Download: https://postpone-united.itch.io/shooting-star
